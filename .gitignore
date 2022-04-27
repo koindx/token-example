@@ -1,0 +1,14 @@
+node_modules
+build
+\.idea/
+\.vs/
+*.wasm
+**/abi/*.abi
+**/proto/*.ts
+**/assembly/index.ts
+**/assembly/*.boilerplate.ts
+*.pb
+*.json
+*.sh
+test.js
+decoder.js
