@@ -4,7 +4,8 @@ import {
   Storage,
   Protobuf,
   value,
-  Crypto
+  Crypto,
+  SafeMath
 } from "@koinos/sdk-as";
 import { token } from "./proto/token";
 import { Spaces } from "./Spaces";
@@ -147,7 +148,7 @@ export class Token {
     const impacted = [args.spender, args.owner];
     const approveEvent = new token.approve_event(args.owner, args.spender, args.value);
     System.event(
-      "token.approve_event",
+      "token.approve",
       Protobuf.encode<token.approve_event>(approveEvent, token.approve_event.encode),
       impacted
     );
@@ -169,7 +170,7 @@ export class Token {
     const impacted = [args.to, args.from];
     const transferEvent = new token.transfer_event(args.from, args.to, args.value);
     System.event(
-      "token.transfer_event",
+      "token.transfer",
       Protobuf.encode<token.transfer_event>(transferEvent, token.transfer_event.encode),
       impacted
     );
@@ -178,7 +179,7 @@ export class Token {
   _mint(args: token.mint_arguments): void {
     const supply = this.supply.get()!;
     System.require(
-      supply.value <= Constants.max_supply - args.value,
+      supply.value <= SafeMath.sub(Constants.max_supply, args.value, "mint would overflow supply"),
       "mint would overflow supply"
     );
 
@@ -191,7 +192,7 @@ export class Token {
     const impacted = [args.to];
     const mintEvent = new token.mint_event(args.to, args.value);
     System.event(
-      "token.mint_event",
+      "token.mint",
       Protobuf.encode<token.mint_event>(mintEvent, token.mint_event.encode),
       impacted
     );
@@ -213,7 +214,7 @@ export class Token {
     const impacted = [args.from!];
     const burnEvent = new token.burn_event(args.from, args.value);
     System.event(
-      "token.burn_event",
+      "token.burn",
       Protobuf.encode<token.burn_event>(burnEvent, token.burn_event.encode),
       impacted
     );
