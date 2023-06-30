@@ -57,7 +57,7 @@ yarn exec koinos-sdk-as-cli run-tests
 To use the token contract, follow these steps:
 
 1. Deploy the contract on a Koinos blockchain.
-2. nteract with the contract using the available methods, such as approve, transfer, mint, etc.
+2. Interact with the contract using the available methods, such as approve, transfer, mint, etc.
 3. Make sure to pass the required arguments when calling the contract methods.
 
 Please refer to the contract code for more details on the available methods and their arguments.
